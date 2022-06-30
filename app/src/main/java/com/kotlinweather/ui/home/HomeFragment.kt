@@ -7,7 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.kotlinweather.R
+import com.kotlinweather.WeatherData
+import com.kotlinweather.WeatherService
 import com.kotlinweather.databinding.FragmentHomeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
@@ -22,21 +28,38 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        println("ALO ALO")
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        getData()
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun getData() {
+        val request = WeatherService.api.getWeather("451782")
+
+        request.enqueue(object : Callback<WeatherData> {
+            override fun onResponse(call: Call<WeatherData>, response: Response<WeatherData>) {
+                var temp = response.body()?.results?.temp
+                var src_image : String
+
+                binding.textTemp.text = temp.toString() + "°C"
+                binding.textCity.text = response.body()?.results?.city.toString()
+            }
+
+            override fun onFailure(call: Call<WeatherData>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 }

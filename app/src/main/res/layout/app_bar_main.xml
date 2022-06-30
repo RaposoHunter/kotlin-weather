@@ -21,57 +21,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:layout_gravity="left">
-
-            <TextView
-                android:id="@+id/text_temp"
-                android:layout_width="wrap_content"
-                android:layout_height="75dp"
-                android:fontFamily="@font/poppins_light"
-                android:text="19°C"
-                android:textColor="#F4EDED"
-                android:textSize="60sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/text_city"
-                android:layout_width="match_parent"
-                android:layout_height="36sp"
-                android:fontFamily="@font/poppins_light"
-                android:text="Rio de Janeiro, RJ"
-                android:textColor="#F4EDED"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/image_temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/sol"
-            android:layout_gravity="right"/>
-    </LinearLayout>
-
     <include layout="@layout/content_main" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

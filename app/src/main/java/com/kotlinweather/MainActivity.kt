@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.kotlinweather.databinding.ActivityMainBinding
+import com.kotlinweather.ui.home.HomeFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,8 +46,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        getData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,23 +57,5 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    fun getData() {
-        val request = WeatherService.api.getWeather("451782")
-
-        request.enqueue(object : Callback<WeatherData> {
-            override fun onResponse(call: Call<WeatherData>, response: Response<WeatherData>) {
-                var temp = response.body()?.results?.temp
-                var src_image : String
-
-                findViewById<TextView>(R.id.text_temp).text = temp.toString() + "°C"
-                findViewById<TextView>(R.id.text_city).text = response.body()?.results?.city.toString()
-            }
-
-            override fun onFailure(call: Call<WeatherData>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
     }
 }
