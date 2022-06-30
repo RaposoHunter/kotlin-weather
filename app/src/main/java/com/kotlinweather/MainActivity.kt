@@ -2,6 +2,7 @@ package com.kotlinweather
 
 import android.os.Bundle
 import android.view.Menu
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
@@ -60,11 +61,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getData() {
-        val request = WeatherService.api.getData()
+        val request = WeatherService.api.getWeather("451782")
 
         request.enqueue(object : Callback<WeatherData> {
             override fun onResponse(call: Call<WeatherData>, response: Response<WeatherData>) {
-                findViewById<TextView>(R.id.text_temp).text = response.body()?.results?.temp.toString()
+                var temp = response.body()?.results?.temp
+                var src_image : String
+
+                findViewById<TextView>(R.id.text_temp).text = temp.toString() + "°C"
                 findViewById<TextView>(R.id.text_city).text = response.body()?.results?.city.toString()
             }
 
@@ -72,26 +76,5 @@ class MainActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         })
-        /*
-        val retrofitClient = NetworkUtils
-            .getRetrofitInstance("https://api.hgbrasil.com/weather?woeid=451782")
-
-        val endpoint = retrofitClient.create(Endpoint::class.java)
-        val callback = endpoint.getWeather()
-
-        callback.enqueue(object : Callback<List<Weather>> {
-            override fun onFailure(call: Call<List<Weather>>, t: Throwable) {
-                Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<List<Weather>>, response: Response<List<Weather>>) {
-                response.body()?.forEach {
-                    // val view = findViewById<TextView>(R.id.text_home)
-                    // view.text = view.text.toString().plus(it)
-                }
-            }
-        })
-
-         */
     }
 }
